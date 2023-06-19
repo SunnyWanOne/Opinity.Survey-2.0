@@ -113,7 +113,7 @@
 }
 @code {
     bool radzenInitialized = false;
-    #region Control Definition
+
     // This control can only be reached by users with Edit permission
     public override SecurityAccessLevel SecurityAccessLevel => SecurityAccessLevel.Edit;
 
@@ -125,10 +125,9 @@
 
     public override List<Resource> Resources => new List<Resource>()
     {
-        new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/Radzen.Blazor/css/standard-base.css" },
+        new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/Radzen.Blazor/css/default-base.css" },
         new Resource { ResourceType = ResourceType.Script, Url = "_content/Radzen.Blazor/Radzen.Blazor.js" }
     };
-    #endregion
 
     SurveyItem SelectedSurveyItem = new SurveyItem() { Id = -1, Required = 1, SurveyItemOption = new List<SurveyItemOption>() };
 

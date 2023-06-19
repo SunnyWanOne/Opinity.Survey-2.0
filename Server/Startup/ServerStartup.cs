@@ -11,7 +11,9 @@ namespace Opinity.Survey.Server.Startup
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<DialogService>();
             services.AddScoped<NotificationService>();
+            services.AddScoped<TooltipService>();
             services.AddScoped<ContextMenuService>();
 
         }
