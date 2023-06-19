@@ -1,0 +1,266 @@
+@using Opinity.Survey.Services
+@using Opinity.Survey.Models
+@using Microsoft.AspNetCore.Components.Authorization
+
+@namespace Opinity.Survey
+@inherits ModuleBase
+@inject ISurveyService SurveyService
+@inject ISurveyAnswersService SurveyAnswersService
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IJSRuntime JsRuntime
+
+@if (SelectedSurvey != null)
+{
+    <ActionLink Action="Edit" Security="SecurityAccessLevel.Edit"
+                Text="Edit Survey" />
+    <br />
+    <br />
+}
+else
+{
+    <ActionLink Action="Edit" Security="SecurityAccessLevel.Edit"
+                Text="Create Survey" />
+    <br />
+    <br />
+}
+
+@if (radzenInitialized)
+{
+    @if (SelectedSurvey != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <h5><b>@SelectedSurvey.SurveyName</b></h5>
+            </div>
+        </div>
+        <RadzenTabs>
+            <Tabs>
+                <RadzenTabsItem Text="Survey">
+                    @if (ShowSurveyComplete)
+                    {
+                        <b>Responses Saved - Survey Complete</b>
+                    }
+                    else
+                    {
+                        <RadzenTemplateForm TItem="Survey" Data="@SelectedSurvey" Submit="@SaveSurvey">
+                            <div>
+                                @foreach (var SurveyItem in SelectedSurvey.SurveyItem.OrderBy(x => x.Position))
+                                {
+                                    <div class="row">
+                                        <div class="col-md-9" style="text-align: left;margin-bottom: 20px">
+                                            <b>@SurveyItem.ItemLabel</b>
+                                            <br />
+                                            @if (SurveyItem.ItemType == "Text Box")
+                                            {
+                                                <RadzenTextBox MaxLength="4000" Name="@SurveyItem.Id.ToString()"
+                                                @bind-Value="@SurveyItem.AnswerValueString" />
+                                            }
+                                            @if (SurveyItem.ItemType == "Text Area")
+                                            {
+                                                <RadzenTextArea MaxLength="4000" Name="@SurveyItem.Id.ToString()"
+                                                @bind-Value="@SurveyItem.AnswerValueString" />
+                                            }
+                                            @if (SurveyItem.ItemType == "Date")
+                                            {
+                                                <RadzenDatePicker DateFormat="d" Name="@SurveyItem.Id.ToString()"
+                                                @bind-Value="@SurveyItem.AnswerValueDateTime"
+                                                                  TValue="DateTime?" ShowTime="false" />
+                                            }
+                                            @if (SurveyItem.ItemType == "Date Time")
+                                            {
+                                                <RadzenDatePicker TValue="DateTime?" Name="@SurveyItem.Id.ToString()"
+                                                @bind-Value="@SurveyItem.AnswerValueDateTime"
+                                                                  ShowTime="true" />
+                                            }
+                                            @if (SurveyItem.ItemType == "Dropdown")
+                                            {
+                                                <RadzenDropDown AllowClear="true" TValue="string" Name="@SurveyItem.Id.ToString()"
+                                                                Data="@SurveyItem.SurveyItemOption.OrderBy(x => x.Id)"
+                                                                TextProperty="OptionLabel" ValueProperty="OptionLabel"
+                                                @bind-Value="@SurveyItem.AnswerValueString"
+                                                                Style="width:300px;" />
+                                            }
+                                            @if (SurveyItem.ItemType == "Multi-Select Dropdown")
+                                            {
+                                                <RadzenDropDown Name="@SurveyItem.Id.ToString()"
+                                                                TValue="IEnumerable<string>"
+                                                                Multiple="true"
+                                                                AllowClear="true"
+                                                                AllowFiltering="true"
+                                                @bind-Value="SurveyItem.AnswerValueList"
+                                                                Placeholder="Select..."
+                                                                Data="@SurveyItem.SurveyItemOption"
+                                                                TextProperty="OptionLabel"
+                                                                ValueProperty="OptionLabel"
+                                                                Style="width:300px;" />
+                                            }
+                                            @if (SurveyItem.Required == 1)
+                                            {
+                                                <br />
+
+                                                <RadzenRequiredValidator Component="@SurveyItem.Id.ToString()"
+                                                                               Text="Required" Popup="false"
+                                                                               Style="position: absolute" />
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <div class="row">
+                                <RadzenButton ButtonType="ButtonType.Submit" Text="Submit"></RadzenButton>
+                            </div>
+                        </RadzenTemplateForm>
+                    }
+                    @if (SelectedSurvey.SurveyItem.Count == 0)
+                    {
+                        <h4>No Survey Items</h4>
+                    }
+                </RadzenTabsItem>
+                <RadzenTabsItem Text="Responses">
+                    <RadzenPanel AllowCollapse="false" Style="margin-bottom: 10px">
+                        <ChildContent>
+                            <RadzenDataList Count="@SurveyResultsCount"
+                                            Data="@SurveyResults"
+                                            LoadData="@LoadSurveyResultsData"
+                                            PageSize="1" WrapItems="true" AllowPaging="true"
+                                            TItem="SurveyItem">
+                                <Template Context="item">
+                                    <RadzenCard Style="height:300px">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <RadzenChart>
+                                                    <RadzenDonutSeries Data="@item.AnswerResponses"
+                                                                       CategoryProperty="OptionLabel"
+                                                                       ValueProperty="Responses">
+                                                        <TitleTemplate>
+                                                            <div class="rz-donut-content">
+                                                                <div>@item.ItemLabel</div>
+                                                            </div>
+                                                        </TitleTemplate>
+                                                    </RadzenDonutSeries>
+                                                </RadzenChart>
+                                            </div>
+                                        </div>
+                                    </RadzenCard>
+                                </Template>
+                            </RadzenDataList>
+                        </ChildContent>
+                    </RadzenPanel>
+                </RadzenTabsItem>
+            </Tabs>
+        </RadzenTabs>
+    }
+}
+@code {
+    bool radzenInitialized = false;
+    #region Control Definition
+    public override SecurityAccessLevel SecurityAccessLevel => SecurityAccessLevel.Anonymous;
+
+    public override List<Resource> Resources => new List<Resource>()
+    {
+        new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/Radzen.Blazor/css/default-base.css" },
+        new Resource { ResourceType = ResourceType.Script, Url = "_content/Radzen.Blazor/Radzen.Blazor.js" }
+    };
+    #endregion
+
+    bool isAuthenticated = false;
+    bool ShowSurveyComplete = false;
+    Survey SelectedSurvey;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender); // allows Oqtane to register the JavaScript library declared in Resources
+
+        if (firstRender && !radzenInitialized)
+        {
+            radzenInitialized = true;
+            StateHasChanged();
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // get user
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            if (authState.User.Identity.IsAuthenticated)
+            {
+                isAuthenticated = true;
+            }
+
+            SelectedSurvey = await SurveyService.GetSurveyAsync(ModuleState.ModuleId);
+        }
+        catch (Exception ex)
+        {
+            await logger.LogError(ex, "Error Loading Survey {Error}", ex.Message);
+            AddModuleMessage("Error Loading Survey", MessageType.Error);
+        }
+    }
+
+    async Task SaveSurvey()
+    {
+        try
+        {
+            if (!isAuthenticated)
+            {
+                // Try to get the Anonymous Cookie
+                var cookieName = $"Oqtane-Survey-Instance-{ModuleState.ModuleId}";
+                var interop = new Oqtane.UI.Interop(JsRuntime);
+
+                var AnonymousCookie = await interop.GetCookie(cookieName);
+
+                if ((AnonymousCookie is null) || (AnonymousCookie == ""))
+                {
+                    // Create a GUID for the user
+                    AnonymousCookie = Guid.NewGuid().ToString();
+
+                    await interop.SetCookie(cookieName, AnonymousCookie, 360);
+                }
+
+                SelectedSurvey.AnonymousCookie = AnonymousCookie;
+                SelectedSurvey.UserId = null;
+            }
+
+            await SurveyAnswersService.CreateSurveyAnswersAsync(SelectedSurvey);
+
+            CompleteSurvey();
+        }
+        catch (Exception ex)
+        {
+            await logger.LogError(ex, "Error in SaveSurvey {Error}", ex.Message);
+            AddModuleMessage("Error in SaveSurvey", MessageType.Error);
+        }
+    }
+
+    void CompleteSurvey()
+    {
+        ShowSurveyComplete = true;
+
+        // Clear Answers
+        foreach (var item in SelectedSurvey.SurveyItem)
+        {
+            item.AnswerValueString = null;
+            item.AnswerValueDateTime = null;
+            item.AnswerValueList = null;
+        }
+    }
+
+    // Survey Results
+
+    int SurveyResultsCount;
+    IEnumerable<SurveyItem> SurveyResults;
+
+    async Task LoadSurveyResultsData(LoadDataArgs args)
+    {
+
+        SurveyResults = await SurveyAnswersService.SurveyResultsDataAsync(ModuleState.ModuleId, SelectedSurvey.SurveyId, args);
+
+        SurveyResultsCount = SelectedSurvey.SurveyItem
+            .Where(x => x.ItemType != "Text Area")
+            .Count();
+
+        await InvokeAsync(StateHasChanged);
+    }
+}

@@ -1,0 +1,50 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Opinity.Survey.Shared.Oqtane/1.0.0": {
+        "dependencies": {
+          "Oqtane.Shared": "3.4.3",
+          "System.ComponentModel.Annotations": "5.0.0"
+        },
+        "runtime": {
+          "Opinity.Survey.Shared.Oqtane.dll": {}
+        }
+      },
+      "Oqtane.Shared/3.4.3": {
+        "runtime": {
+          "lib/net6.0/Oqtane.Shared.dll": {
+            "assemblyVersion": "3.4.3.0",
+            "fileVersion": "3.4.3.0"
+          }
+        }
+      },
+      "System.ComponentModel.Annotations/5.0.0": {}
+    }
+  },
+  "libraries": {
+    "Opinity.Survey.Shared.Oqtane/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Oqtane.Shared/3.4.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gaBi0qENOjjYKVGo6VdSUT8nD4fhHDMWCi8jSE7tasFExaRpSDJAocdKuOMyNH7aL/ZKmrvlSNr00iEn9T4JzQ==",
+      "path": "oqtane.shared/3.4.3",
+      "hashPath": "oqtane.shared.3.4.3.nupkg.sha512"
+    },
+    "System.ComponentModel.Annotations/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dMkqfy2el8A8/I76n2Hi1oBFEbG1SfxD2l5nhwXV3XjlnOmwxJlQbYpJH4W51odnU9sARCSAgv7S3CyAFMkpYg==",
+      "path": "system.componentmodel.annotations/5.0.0",
+      "hashPath": "system.componentmodel.annotations.5.0.0.nupkg.sha512"
+    }
+  }
+}

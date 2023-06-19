@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\Opinity.Survey.Server.Oqtane.props" />
+</Project>

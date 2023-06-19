@@ -1,0 +1,84 @@
+﻿@namespace Opinity.Survey
+@inherits ModuleBase
+
+@using Oqtane.Modules.Controls
+@using Opinity.Survey.Services
+@using Opinity.Survey.Models
+
+@inject ISurveyService SurveyService
+@inject NavigationManager NavigationManager
+
+@strError
+<RadzenCard Style="margin-bottom: 20px;">
+    <div class="row">
+        <div class="col-md-12">
+            <div>Survey Name:</div>
+            <RadzenTextBox @bind-Value="Survey.SurveyName" Style="width: 400px" />
+            <br />
+        </div>
+    </div>
+</RadzenCard>
+<RadzenButton Click="UpdateSurvey"
+              Text="Save" ButtonStyle="ButtonStyle.Success"
+              Style="margin-bottom: 10px; width: 150px" />
+<RadzenButton Click="Cancel"
+              Text="Cancel" ButtonStyle="ButtonStyle.Light"
+              Style="margin-bottom: 10px; width: 150px" />
+@code {
+    #region Control Definition
+    // This control can only be reached by users with Edit permission
+    public override SecurityAccessLevel SecurityAccessLevel => SecurityAccessLevel.Edit;
+
+    // This control responds to the Add or Edit ActionLink commands
+    public override string Actions => "EditSurvey";
+
+    // Title for the control
+    public override string Title => "Edit Survey";
+
+    public override List<Resource> Resources => new List<Resource>()
+    {
+        new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/Radzen.Blazor/css/default-base.css" },
+        new Resource { ResourceType = ResourceType.Script, Url = "_content/Radzen.Blazor/Radzen.Blazor.js" }
+    };
+    #endregion
+
+    string strError = "";
+    Survey Survey = new Survey();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Survey = await SurveyService.GetSurveyAsync(ModuleState.ModuleId);
+        }
+        catch (Exception ex)
+        {
+            await logger.LogError(ex, "Error Loading Survey for {ModuleState.ModuleId} {Error}", ModuleState.ModuleId, ex.Message);
+            AddModuleMessage("Error Loading Survey", MessageType.Error);
+        }
+    }
+
+    async Task UpdateSurvey()
+    {
+        try
+        {
+            await SurveyService.UpdateSurveyAsync(Survey);
+            await logger.LogInformation("Survey Updated {Survey}", Survey);
+
+            // Get URL for Edit control
+            string strEditURL = EditUrl("Edit");
+            NavigationManager.NavigateTo(strEditURL);
+        }
+        catch (Exception ex)
+        {
+            await logger.LogError(ex, "Error in UpdateSurvey {Error}", ex.Message);
+        }
+    }
+
+    void Cancel()
+    {
+        // Get URL for Edit control
+        string strEditURL = EditUrl("Edit");
+        NavigationManager.NavigateTo(strEditURL);
+    }
+}

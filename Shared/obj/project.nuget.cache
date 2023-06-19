@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "2zk5MptjPBl6pfUmmX84KvB66ypfdLvHRkcSxvnvyH0TzUpHjlGCT9DYs/zivWc6gZBCz5aN3FDbtSeRPjeJvQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\SunnyWan\\Downloads\\survey5\\Opinity.Survey\\Shared\\Opinity.Survey.Shared.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\SunnyWan\\.nuget\\packages\\oqtane.shared\\3.4.3\\oqtane.shared.3.4.3.nupkg.sha512",
+    "C:\\Users\\SunnyWan\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

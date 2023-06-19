@@ -1,0 +1,12 @@
+C:\Users\SunnyWan\Downloads\survey5\Opinity.Survey\Shared\bin\Debug\net6.0\Opinity.Survey.Shared.Oqtane.deps.json
+C:\Users\SunnyWan\Downloads\survey5\Opinity.Survey\Shared\bin\Debug\net6.0\Opinity.Survey.Shared.Oqtane.dll
+C:\Users\SunnyWan\Downloads\survey5\Opinity.Survey\Shared\bin\Debug\net6.0\Opinity.Survey.Shared.Oqtane.pdb
+C:\Users\SunnyWan\Downloads\survey5\Opinity.Survey\Shared\obj\Debug\net6.0\Opinity.Survey.Shared.csproj.AssemblyReference.cache
+C:\Users\SunnyWan\Downloads\survey5\Opinity.Survey\Shared\obj\Debug\net6.0\Opinity.Survey.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\SunnyWan\Downloads\survey5\Opinity.Survey\Shared\obj\Debug\net6.0\Opinity.Survey.Shared.AssemblyInfoInputs.cache
+C:\Users\SunnyWan\Downloads\survey5\Opinity.Survey\Shared\obj\Debug\net6.0\Opinity.Survey.Shared.AssemblyInfo.cs
+C:\Users\SunnyWan\Downloads\survey5\Opinity.Survey\Shared\obj\Debug\net6.0\Opinity.Survey.Shared.csproj.CoreCompileInputs.cache
+C:\Users\SunnyWan\Downloads\survey5\Opinity.Survey\Shared\obj\Debug\net6.0\Opinity.Survey.Shared.Oqtane.dll
+C:\Users\SunnyWan\Downloads\survey5\Opinity.Survey\Shared\obj\Debug\net6.0\refint\Opinity.Survey.Shared.Oqtane.dll
+C:\Users\SunnyWan\Downloads\survey5\Opinity.Survey\Shared\obj\Debug\net6.0\Opinity.Survey.Shared.Oqtane.pdb
+C:\Users\SunnyWan\Downloads\survey5\Opinity.Survey\Shared\obj\Debug\net6.0\ref\Opinity.Survey.Shared.Oqtane.dll
