@@ -127,7 +127,6 @@ namespace Opinity.Survey.Controllers
         }
 
         // Utility
-        #region private IEnumerable<Models.Survey> ConvertToSurveys(List<OqtaneSurvey> colOqtaneSurveys)
         private IEnumerable<Models.Survey> ConvertToSurveys(List<OqtaneSurvey> colOqtaneSurveys)
         {
             List<Models.Survey> colSurveyCollection = new List<Models.Survey>();
@@ -143,9 +142,7 @@ namespace Opinity.Survey.Controllers
 
             return colSurveyCollection;
         }
-        #endregion
 
-        #region private static Models.Survey ConvertToSurvey(OqtaneSurvey objOqtaneSurvey)
         private Models.Survey ConvertToSurvey(OqtaneSurvey objOqtaneSurvey)
         {
             if (objOqtaneSurvey == null)
@@ -205,6 +202,5 @@ namespace Opinity.Survey.Controllers
 
             return objAddSurvey;
         }
-        #endregion
     }
 }

@@ -98,7 +98,6 @@
 <br />
 
 @code {
-    #region Control Definition
     // This control can only be reached by users with Edit permission
     public override SecurityAccessLevel SecurityAccessLevel => SecurityAccessLevel.Edit;
 
@@ -110,10 +109,9 @@
 
     public override List<Resource> Resources => new List<Resource>()
     {
-        new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/Radzen.Blazor/css/standard-base.css" },
+        new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/Radzen.Blazor/css/default-base.css" },
         new Resource { ResourceType = ResourceType.Script, Url = "_content/Radzen.Blazor/Radzen.Blazor.js" }
     };
-    #endregion
 
     Survey Survey = new Survey() { SurveyItem = new List<SurveyItem>() };
     public SurveyItem Answer = new SurveyItem();
@@ -168,7 +166,6 @@
         Survey = await SurveyService.GetSurveyAsync(ModuleState.ModuleId);
     }
 
-    #region private async Task Save()
     private async Task Save()
     {
         try
@@ -198,9 +195,7 @@
             AddModuleMessage("Error Saving Survey", MessageType.Error);
         }
     }
-    #endregion
 
-    #region private async Task DeleteSurvey()
     private async Task DeleteSurvey()
     {
         try
@@ -215,5 +210,4 @@
             AddModuleMessage("Error Deleting Survey", MessageType.Error);
         }
     }
-    #endregion
 }

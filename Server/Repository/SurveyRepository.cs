@@ -22,7 +22,6 @@ namespace Opinity.Survey.Repository
 
         // Surveys
 
-        #region public async Task<List<OqtaneSurvey>> GetAllSurveysAsync()
         public async Task<List<OqtaneSurvey>> GetAllSurveysAsync()
         {
             return await _db.OqtaneSurvey
@@ -32,9 +31,7 @@ namespace Opinity.Survey.Repository
                 .OrderBy(x => x.SurveyName)
                 .ToListAsync();
         }
-        #endregion
 
-        #region public List<OqtaneSurvey> GetAllSurveysByModule(int ModuleId)
         public List<OqtaneSurvey> GetAllSurveysByModule(int ModuleId)
         {
             return _db.OqtaneSurvey
@@ -45,9 +42,7 @@ namespace Opinity.Survey.Repository
                 .OrderBy(x => x.SurveyName)
                 .ToList();
         }
-        #endregion
 
-        #region public OqtaneSurvey GetSurvey(int Id)
         public OqtaneSurvey GetSurvey(int Id)
         {
             // There is one Survey per Module
@@ -58,9 +53,7 @@ namespace Opinity.Survey.Repository
                 .Where(x => x.ModuleId == Id)
                 .FirstOrDefault();
         }
-        #endregion
 
-        #region public OqtaneSurvey CreateSurvey(Models.Survey NewSurvey)
         public OqtaneSurvey CreateSurvey(Models.Survey NewSurvey)
         {
             try
@@ -84,9 +77,7 @@ namespace Opinity.Survey.Repository
                 throw;
             }
         }
-        #endregion
 
-        #region public OqtaneSurvey UpdateSurvey(Models.Survey objExistingSurvey)
         public OqtaneSurvey UpdateSurvey(Models.Survey objExistingSurvey)
         {
             try
@@ -107,9 +98,7 @@ namespace Opinity.Survey.Repository
                 throw;
             }
         }
-        #endregion
 
-        #region public bool DeleteSurvey(int id)
         public bool DeleteSurvey(int id)
         {
             var ExistingSurvey =
@@ -129,11 +118,9 @@ namespace Opinity.Survey.Repository
 
             return true;
         }
-        #endregion
 
         // Survey Items
 
-        #region public List<OqtaneSurveyItem> GetAllSurveyItems(int ModuleId)
         public List<OqtaneSurveyItem> GetAllSurveyItems(int ModuleId)
         {
             return _db.OqtaneSurveyItem
@@ -142,9 +129,7 @@ namespace Opinity.Survey.Repository
                 .OrderBy(x => x.Id)
                 .ToList();
         }
-        #endregion
 
-        #region public OqtaneSurveyItem GetSurveyItem(int SurveyItemId)
         public OqtaneSurveyItem GetSurveyItem(int SurveyItemId)
         {
             return _db.OqtaneSurveyItem
@@ -152,9 +137,7 @@ namespace Opinity.Survey.Repository
                 .Include(x => x.OqtaneSurveyItemOption)
                 .FirstOrDefault();
         }
-        #endregion
 
-        #region public OqtaneSurveyItem CreateSurveyItem(Models.SurveyItem NewSurveyItem)
         public OqtaneSurveyItem CreateSurveyItem(Models.SurveyItem NewSurveyItem)
         {
             try
@@ -200,9 +183,7 @@ namespace Opinity.Survey.Repository
                 throw;
             }
         }
-        #endregion
 
-        #region public OqtaneSurveyItem UpdateSurveyItem(Models.SurveyItem objExistingSurveyItem)
         public OqtaneSurveyItem UpdateSurveyItem(Models.SurveyItem objExistingSurveyItem)
         {
             try
@@ -229,9 +210,7 @@ namespace Opinity.Survey.Repository
                 throw;
             }
         }
-        #endregion
 
-        #region public bool DeleteSurveyItem(int Id)
         public bool DeleteSurveyItem(int Id)
         {
             var ExistingSurveyItem =
@@ -251,11 +230,9 @@ namespace Opinity.Survey.Repository
 
             return true;
         }
-        #endregion
-
+    
         // Survey Answers
 
-        #region public bool CreateSurveyAnswers(Models.Survey paramDTOSurvey)
         public bool CreateSurveyAnswers(Models.Survey paramDTOSurvey)
         {
             try
@@ -348,9 +325,8 @@ namespace Opinity.Survey.Repository
                 throw;
             }
         }
-        #endregion
 
-        #region public List<SurveyItem> SurveyResultsData(int SelectedSurveyId, LoadDataArgs args)
+
         public List<SurveyItem> SurveyResultsData(int SelectedSurveyId, LoadDataArgs args)
         {
             // Get Survey Items
@@ -463,18 +439,14 @@ namespace Opinity.Survey.Repository
 
             return SurveyResultsCollection;
         }
-        #endregion
 
         // Utility       
 
-        #region public async Task ExecuteSqlRaw(string sql)
         public async Task ExecuteSqlRaw(string sql)
         {
             await _db.Database.ExecuteSqlRawAsync(sql);
         }
-        #endregion
 
-        #region public void DetachAllEntities()
         public void DetachAllEntities()
         {
             var changedEntriesCopy = _db.ChangeTracker.Entries()
@@ -485,9 +457,7 @@ namespace Opinity.Survey.Repository
             foreach (var entry in changedEntriesCopy)
                 entry.State = EntityState.Detached;
         }
-        #endregion
 
-        #region private List<OqtaneSurveyItemOption> ConvertToOqtaneSurveyItems(IEnumerable<Models.SurveyItemOption> colSurveyItemOptions)
         private List<OqtaneSurveyItemOption> ConvertToOqtaneSurveyItems(IEnumerable<Models.SurveyItemOption> colSurveyItemOptions)
         {
             List<OqtaneSurveyItemOption> colOqtaneSurveyItemOptionCollection = new List<OqtaneSurveyItemOption>();
@@ -503,9 +473,7 @@ namespace Opinity.Survey.Repository
 
             return colOqtaneSurveyItemOptionCollection;
         }
-        #endregion
 
-        #region private OqtaneSurveyItemOption ConvertToOqtaneSurveyItemOption(SurveyItemOption objSurveyItemOption)
         private OqtaneSurveyItemOption ConvertToOqtaneSurveyItemOption(SurveyItemOption objSurveyItemOption)
         {
             if (objSurveyItemOption == null)
@@ -521,6 +489,5 @@ namespace Opinity.Survey.Repository
 
             return objOqtaneSurveyItemOption;
         }
-        #endregion
     }
 }

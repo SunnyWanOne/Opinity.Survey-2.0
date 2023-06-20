@@ -186,7 +186,6 @@ namespace Opinity.Survey.Controllers
 
         // Utility
 
-        #region private IEnumerable<Models.SurveyItem> ConvertToSurveyItems(List<OqtaneSurveyItem> colOqtaneSurveyItems)
         private IEnumerable<Models.SurveyItem> ConvertToSurveyItems(List<OqtaneSurveyItem> colOqtaneSurveyItems)
         {
             List<Models.SurveyItem> colSurveyItemCollection = new List<Models.SurveyItem>();
@@ -202,9 +201,7 @@ namespace Opinity.Survey.Controllers
 
             return colSurveyItemCollection;
         }
-        #endregion
 
-        #region private Models.SurveyItem ConvertToSurveyItem(OqtaneSurveyItem objOqtaneSurveyItem)
         private Models.SurveyItem ConvertToSurveyItem(OqtaneSurveyItem objOqtaneSurveyItem)
         {
             if (objOqtaneSurveyItem == null)
@@ -240,6 +237,5 @@ namespace Opinity.Survey.Controllers
 
             return objSurveyItem;
         }
-        #endregion
     }
 }

@@ -154,15 +154,14 @@ else
 }
 @code {
     bool radzenInitialized = false;
-    #region Control Definition
     public override SecurityAccessLevel SecurityAccessLevel => SecurityAccessLevel.Anonymous;
+
 
     public override List<Resource> Resources => new List<Resource>()
     {
         new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/Radzen.Blazor/css/default-base.css" },
         new Resource { ResourceType = ResourceType.Script, Url = "_content/Radzen.Blazor/Radzen.Blazor.js" }
     };
-    #endregion
 
     bool isAuthenticated = false;
     bool ShowSurveyComplete = false;

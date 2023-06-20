@@ -25,7 +25,6 @@
               Text="Cancel" ButtonStyle="ButtonStyle.Light"
               Style="margin-bottom: 10px; width: 150px" />
 @code {
-    #region Control Definition
     // This control can only be reached by users with Edit permission
     public override SecurityAccessLevel SecurityAccessLevel => SecurityAccessLevel.Edit;
 
@@ -40,7 +39,6 @@
         new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/Radzen.Blazor/css/default-base.css" },
         new Resource { ResourceType = ResourceType.Script, Url = "_content/Radzen.Blazor/Radzen.Blazor.js" }
     };
-    #endregion
 
     string strError = "";
     Survey Survey = new Survey();

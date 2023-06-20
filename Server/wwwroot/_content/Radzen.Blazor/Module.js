@@ -1,5 +1,5 @@
 /* Module Script */
-var Oqtane = Oqtane || {};
+var opinity = opinity || {};
 
-Oqtane.Survey = {
+opinity.survey = {
 };
