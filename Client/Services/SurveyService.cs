@@ -28,7 +28,8 @@ namespace Opinity.Survey.Services
 
         public async Task<Models.Survey> GetSurveyAsync(int ModuleId)
         {
-            return await GetJsonAsync<Models.Survey>(CreateAuthorizationPolicyUrl($"{Apiurl}/{ModuleId}", EntityNames.Module, ModuleId));
+            var survey = await GetJsonAsync<Models.Survey>(CreateAuthorizationPolicyUrl($"{Apiurl}/{ModuleId}", EntityNames.Module, ModuleId));
+            return survey;
         }
 
         public async Task<Models.Survey> AddSurveyAsync(Models.Survey Survey)
